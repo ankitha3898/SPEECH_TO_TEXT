@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vosk Microphone Streaming Example</title>
+</head>
+<body>
+    <h1>Vosk Microphone Streaming Example</h1>
+    <form id="languageForm">
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect" name="language">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+	    <option value="hi">Hindi</option>
+            <!-- Add more language options as needed -->
+        </select>
+        <button type="button" onclick="startStreaming()">Start Microphone Streaming</button>
+        <button type="button" onclick="stopStreaming()">stop</button>
+
+    </form>
+    <div id="result"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script type="text/javascript">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('update_result', function(data) {
+            document.getElementById('result').innerText = 'Result: ' + data.result;
+        });
+
+        function startStreaming() {
+            var languageSelect = document.getElementById('languageSelect');
+            var selectedLanguage = languageSelect.options[languageSelect.selectedIndex].value;
+
+            // Start microphone streaming with the selected language
+            socket.emit('start_microphone_streaming', { language: selectedLanguage });
+        }
+    function stopStreaming() {
+                        socket.emit('start_microphone_streaming', { stop: 1 });
+        }
+    </script>
+</body>
+</html>
+
