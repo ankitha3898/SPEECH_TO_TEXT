@@ -1,6 +1,0 @@
-pyaudio==0.2.13
-Flask==2.2.2
-translate==3.6.1
-gTTS==2.3.2
-pygame==2.4.0
-textblob==0.17.1
